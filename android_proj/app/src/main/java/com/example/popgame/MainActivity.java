@@ -2,6 +2,7 @@ package com.example.popgame;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // getWindow().setHardwareAccelerated(true);
         setContentView(R.layout.activity_main);
 
         webView = findViewById(R.id.webView);
@@ -25,7 +27,15 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccessFromFileURLs(true);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
+        // 启用WebGL和硬件加速
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setEnableSmoothTransition(true);
+
+        // 设置WebChromeClient以支持WebGL
+        webView.setWebChromeClient(new WebChromeClient());
         // 防止在系统浏览器中打开
         webView.setWebViewClient(new WebViewClient());
 
